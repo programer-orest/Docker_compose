@@ -13,34 +13,34 @@ The configuration ensures data persistence through named volumes and automatical
     - Shell (entrypoint scripts)
 
 🚀 What Was Done
-    1. Created a docker-compose.yml file to define and run two services:
+1. Created a docker-compose.yml file to define and run two services:
 
-        - mysql
+    - mysql
 
-        - pythonapp (Django application)
+    - pythonapp (Django application)
 
-    2. Used a custom Dockerfile.mysql to build the MySQL image and expose port 3306.
+2. Used a custom Dockerfile.mysql to build the MySQL image and expose port 3306.
 
-    3. Attached a named volume (db-data) to persist MySQL data in /var/lib/mysql.
+3. Attached a named volume (db-data) to persist MySQL data in /var/lib/mysql.
 
-    4. Removed:
+4. Removed:
 
-        - RUN python manage.py migrate
-    from the Django Dockerfile to avoid running migrations during build time.
+    - RUN python manage.py migrate
+from the Django Dockerfile to avoid running migrations during build time.
 
-    5. Refactored the ENTRYPOINT of the Django container to:
+5. Refactored the ENTRYPOINT of the Django container to:
 
-        - Wait for the MySQL database to become available.
+    - Wait for the MySQL database to become available.
 
-        - Run migrations after the database is ready.
+    - Run migrations after the database is ready.
 
-    6. Configured depends_on with healthcheck in docker-compose.yml to ensure the Django service starts only after MySQL is healthy.
+6. Configured depends_on with healthcheck in docker-compose.yml to ensure the Django service starts only after MySQL is healthy.
 
-    7. Created INSTRUCTION.md with detailed steps on how to:
+7. Created INSTRUCTION.md with detailed steps on how to:
 
-        - Run the setup with Docker Compose.
+    - Run the setup with Docker Compose.
 
-        - Stop and clean up containers and volumes.
+    - Stop and clean up containers and volumes.
 
-    8. Ensured that todos are stored in MySQL and persist between restarts thanks to the named volume.
+8. Ensured that todos are stored in MySQL and persist between restarts thanks to the named volume.
 
